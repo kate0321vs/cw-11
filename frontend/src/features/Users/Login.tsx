@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { LoginMutation } from '../../types';
-import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mui/material';
+import {Avatar, Box, Button, CircularProgress, Container, Link, TextField, Typography} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectLoginError } from './usersSlice.ts';
+import {selectLoginError, selectLoginLoading} from './usersSlice.ts';
 import { login } from './usersThunk.ts';
 import Alert from '@mui/material/Alert';
 
@@ -15,8 +15,7 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectLoginError);
   const navigate = useNavigate();
-
-
+  const loading = useAppSelector(selectLoginLoading)
 
   const [state, setState] = useState<LoginMutation>({
     username: '',
@@ -91,6 +90,7 @@ const Login = () => {
             fullWidth
             variant="contained"
             sx={{backgroundColor: "black", mt: 3, mb: 2, fontWeight: '500'}}
+            endIcon={loading && <CircularProgress size={24} />}
           >
             Sign In
           </Button>

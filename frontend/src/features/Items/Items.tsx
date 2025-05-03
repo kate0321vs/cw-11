@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
-import {selectItemLoading, selectItems} from "./itemsSlice.ts";
+import { selectItems, selectItemsLoading} from "./itemsSlice.ts";
 import {useEffect} from "react";
 import {fetchItems} from "./ItemsThunk.ts";
 import SiteBar from "./components/SilteBar/SiteBar.tsx";
@@ -11,7 +11,7 @@ import {Box, Typography} from "@mui/material";
 const Items = () => {
     const dispatch = useAppDispatch();
     const items = useAppSelector(selectItems);
-    const loading = useAppSelector(selectItemLoading);
+    const loading = useAppSelector(selectItemsLoading);
     const [searchParams] = useSearchParams();
     const category = searchParams.get("category");
 

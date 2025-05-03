@@ -12,6 +12,7 @@ interface Props {
 
 
 const OneItem: React.FC<Props> = ({title, image, price, id}) => {
+
     return (
             <Card style={{textDecoration: "none"}} component={NavLink} to={`/items/${id}`} sx={{width: 345}}>
                 <CardMedia

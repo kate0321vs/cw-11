@@ -1,8 +1,8 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {Box, Button, Divider, Grid, Typography} from "@mui/material";
+import {Box, Button, CircularProgress, Divider, Grid, Typography} from "@mui/material";
 import {baseURL} from "../../globalConstants.ts";
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
-import {selectItem, selectItemLoading} from "./itemsSlice.ts";
+import {selectDeleteItemLoading, selectItem, selectItemLoading} from "./itemsSlice.ts";
 import {useEffect} from "react";
 import {deleteItem, fetchItem} from "./ItemsThunk.ts";
 import Spinner from "../../components/UI/Spinner/Spinner.tsx";
@@ -15,6 +15,7 @@ const FullInfoItem = () => {
     const dispatch = useAppDispatch();
     const item = useAppSelector(selectItem);
     const loading = useAppSelector(selectItemLoading);
+    const deleteLoading = useAppSelector(selectDeleteItemLoading);
     const user = useAppSelector(selectUser);
     const {id} = useParams() as { id: string };
     const navigate = useNavigate();
@@ -74,7 +75,7 @@ const FullInfoItem = () => {
                                     <Button
                                         variant="outlined"
                                         color="error"
-                                        startIcon={<DeleteIcon />}
+                                        startIcon={deleteLoading ? <CircularProgress/> : <DeleteIcon />}
                                         onClick={() => onDeleteItem()}
                                     >
                                         Delete

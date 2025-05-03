@@ -8,17 +8,18 @@ import {
     TextField
 } from "@mui/material";
 import Grid from '@mui/material/Grid';
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import SendIcon from '@mui/icons-material/Send';
 import {useNavigate} from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import {selectCreateItemLoading} from "../../itemsSlice.ts";
+import {selectCreateItemLoading, selectErrorCreate} from "../../itemsSlice.ts";
 import {selectCategories} from "../../../Categories/CategoriesSlice.ts";
 import {IMutationItem} from "../../../../types";
 import {createItem} from "../../ItemsThunk.ts";
 import FileInput from "../../../../components/UI/FileInput/FileInput.tsx";
 import {categoriesFetch} from "../../../Categories/CategoriesThunk.ts";
+import Alert from "@mui/material/Alert";
 
 const initialState = {
     title: '',
@@ -34,6 +35,7 @@ const PostForm = () => {
     const [state, setState] = useState<IMutationItem>(initialState);
     const navigate = useNavigate();
     const categories = useAppSelector(selectCategories);
+    const error = useAppSelector(selectErrorCreate)
 
     useEffect(() => {
         dispatch(categoriesFetch());
@@ -42,9 +44,11 @@ const PostForm = () => {
     const submitFormHandler = async (e: React.FormEvent) => {
         e.preventDefault();
         await dispatch(createItem(state));
-        toast.success('Item was added Successfully!');
-        navigate('/')
-        setState(initialState);
+        if (!error) {
+            toast.success('Item was added Successfully!');
+            navigate('/')
+            setState(initialState);
+        }
     };
 
     const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
@@ -71,6 +75,14 @@ const PostForm = () => {
             onSubmit={submitFormHandler}
         >
             <Grid container direction="column" spacing={2}>
+                {error && (
+                    <Alert
+                        severity="error"
+                        sx={{mt: 3, width: '100%'}}
+                    >
+                        {error}
+                    </Alert>
+                )}
                 <Grid>
                     <TextField
                         id="title"

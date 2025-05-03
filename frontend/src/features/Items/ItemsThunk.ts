@@ -1,7 +1,8 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {IItem, IMutationItem} from "../../types";
+import { IItem, IMutationItem} from "../../types";
 import axiosApi from "../../axiosApi.ts";
 import {RootState} from "../../app/store.ts";
+import {isAxiosError} from "axios";
 
 export const fetchItems = createAsyncThunk<IItem[], string | undefined>(
     'items/fetchAll',
@@ -21,27 +22,37 @@ export const fetchItem = createAsyncThunk<IItem, string>(
     }
 );
 
-export const createItem = createAsyncThunk<void, IMutationItem, {state: RootState}>(
+export const createItem = createAsyncThunk<
+    void,
+    IMutationItem,
+    {state: RootState, rejectValue: string | null}>(
     'items/create',
     async (item, thunkAPI) => {
-        const usersState = thunkAPI.getState().users;
-        const formData = new FormData();
-        const keys = Object.keys(item) as (keyof IMutationItem)[];
+        try {
+            const usersState = thunkAPI.getState().users;
+            const formData = new FormData();
+            const keys = Object.keys(item) as (keyof IMutationItem)[];
 
-        keys.forEach((key) => {
-            const value = item[key];
+            keys.forEach((key) => {
+                const value = item[key];
 
-            if (value !== null) {
-                formData.append(key, value);
-            }
-        });
-        await axiosApi.post("/items",
-            formData,
-            {
-                headers: {
-                    "Authorization": usersState.user?.token,
+                if (value !== null) {
+                    formData.append(key, value);
                 }
             });
+            await axiosApi.post("/items",
+                formData,
+                {
+                    headers: {
+                        "Authorization": usersState.user?.token,
+                    }
+                });
+        } catch (error) {
+            if (isAxiosError(error) && error.response && error.response.status === 400) {
+                return thunkAPI.rejectWithValue(error.response.data);
+            }
+            throw error;
+        }
     }
 );
 
