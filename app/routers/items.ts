@@ -20,6 +20,19 @@ itemsRouter.get("/", async (req, res) => {
     }
 });
 
+itemsRouter.get("/:id", async (req, res) => {
+    try {
+        const item = await Item.findById(req.params.id).populate("user", "displayName phoneNumber -_id");
+        if (!item) {
+            res.status(404).send({error: "Item not found"});
+            return
+        }
+        res.send(item);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+})
+
 itemsRouter.post("/", auth, async (req, res, next) => {
     try {
         const user = (req as RequestWithUser).user;
@@ -60,7 +73,7 @@ itemsRouter.delete("/:id", auth, async (req, res) => {
     } catch (e) {
         res.status(500).send(e);
     }
-})
+});
 
 
 export default itemsRouter;

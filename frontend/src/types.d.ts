@@ -37,3 +37,27 @@ export interface ValidationError {
 export interface GlobalError {
     error: string;
 }
+
+export interface ICategory {
+    name: string;
+}
+
+export interface IItem {
+    title: string;
+    description: string;
+    image: string;
+    price: number;
+    category: string;
+    user: {
+        displayName: string;
+        phoneNumber: string
+    };
+}
+
+export interface IMutationItem {
+    title: string;
+    description: string;
+    image: File;
+    price: number;
+    category: string;
+}
