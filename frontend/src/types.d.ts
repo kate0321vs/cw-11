@@ -7,6 +7,8 @@ export interface RegisterMutation {
 
 export interface IUser {
     _id: string;
+    displayName: string;
+    phoneNumber: string;
     username: string;
     password: string;
     token: string;
@@ -60,7 +62,7 @@ export interface IItem {
 export interface IMutationItem {
     title: string;
     description: string;
-    image: File;
-    price: number;
+    image: File | null;
+    price: string;
     category: string;
 }

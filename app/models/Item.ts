@@ -13,6 +13,7 @@ const ItemSchema = new Schema({
     },
     price: {
         type: Number,
+        min: 0,
         required: true,
     },
     image: {

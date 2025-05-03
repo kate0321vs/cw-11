@@ -4,6 +4,7 @@ import { IUser } from '../../../types';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {logout} from "../../../features/Users/usersThunk.ts";
 import {useAppDispatch} from "../../../app/hooks.ts";
+import {NavLink} from "react-router-dom";
 
 interface Props {
   user: IUser;
@@ -36,9 +37,9 @@ const UserMenu: React.FC<Props> = ({user}) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-          <MenuItem disabled={true}>Hello, {user.username}!</MenuItem>
+          <MenuItem disabled={true}>Hello, {user.displayName}!</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          <MenuItem>Add Item</MenuItem>
+          <MenuItem component={NavLink} to="/add_item">Add Item</MenuItem>
       </Menu>
     </>
   );

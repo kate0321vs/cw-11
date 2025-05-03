@@ -5,6 +5,7 @@ import Register from "./features/Users/Register.tsx";
 import Login from "./features/Users/Login.tsx";
 import Items from "./features/Items/Items.tsx";
 import FullInfoItem from "./features/Items/FullInfoItem.tsx";
+import NewItem from "./features/Items/NewItem.tsx";
 
 
 
@@ -22,6 +23,7 @@ const App = () => {
                         <Route path="/" element={<Items/>} />
                         <Route path="/items" element={<Items/>} />
                         <Route path="/items/:id" element={<FullInfoItem/>} />
+                        <Route path="/add_item" element={<NewItem/>} />
                         <Route path="*" element={(<h1>Not page found</h1>)}/>
                     </Routes>
                 </Container>

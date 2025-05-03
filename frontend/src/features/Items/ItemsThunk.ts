@@ -23,12 +23,24 @@ export const fetchItem = createAsyncThunk<IItem, string>(
 
 export const createItem = createAsyncThunk<void, IMutationItem, {state: RootState}>(
     'items/create',
-    async (item, ThunkApi) => {
-        const usersState = ThunkApi.getState().users
-        await axiosApi.post('/items',
-            item,
-            {headers:
-                    {"Authorization": usersState.user?.token}
+    async (item, thunkAPI) => {
+        const usersState = thunkAPI.getState().users;
+        const formData = new FormData();
+        const keys = Object.keys(item) as (keyof IMutationItem)[];
+
+        keys.forEach((key) => {
+            const value = item[key];
+
+            if (value !== null) {
+                formData.append(key, value);
+            }
+        });
+        await axiosApi.post("/items",
+            formData,
+            {
+                headers: {
+                    "Authorization": usersState.user?.token,
+                }
             });
     }
 );
