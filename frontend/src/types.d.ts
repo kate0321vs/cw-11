@@ -39,10 +39,12 @@ export interface GlobalError {
 }
 
 export interface ICategory {
+    _id: string;
     name: string;
 }
 
 export interface IItem {
+    _id: string;
     title: string;
     description: string;
     image: string;

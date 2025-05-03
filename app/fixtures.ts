@@ -41,7 +41,7 @@ const run = async () => {
    await Item.create({
        title: "Wall Clock",
        description: "Modern silent wall clock with a minimalist design, ideal for any interior.",
-       image: "fixtures/wall-clock.jpg",
+       image: "fixtures/wallClock.jpg",
        price: 30,
        category: Category1,
        user: User1,
@@ -76,7 +76,7 @@ const run = async () => {
    }, {
        title: "Bubble Blower Gun with Lights",
        description: "Automatic bubble gun with colorful lights — fun for outdoor play.",
-       image: "fixtures/bubbleGun.jpg",
+       image: "fixtures/bubbleGun .jpg",
        price: 20,
        category: Category3,
        user: User2,

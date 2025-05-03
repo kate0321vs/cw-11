@@ -1,6 +1,7 @@
 import {ICategory} from "../../types";
 import {createSlice} from "@reduxjs/toolkit";
 import {categoriesFetch} from "./CategoriesThunk.ts";
+import {RootState} from "../../app/store.ts";
 
 interface CategoriesState {
     categories: ICategory[];
@@ -30,4 +31,5 @@ export const CategoriesSlice = createSlice({
     }
 });
 
-export const categoriesReducer = CategoriesSlice.reducer
+export const categoriesReducer = CategoriesSlice.reducer;
+export const selectCategories = (state: RootState) => state.categories.categories;
