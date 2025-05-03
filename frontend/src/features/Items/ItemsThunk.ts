@@ -27,14 +27,18 @@ export const createItem = createAsyncThunk<void, IMutationItem, {state: RootStat
         const usersState = ThunkApi.getState().users
         await axiosApi.post('/items',
             item,
-            {headers: {"Authorization": usersState.user?.token}
+            {headers:
+                    {"Authorization": usersState.user?.token}
             });
     }
 );
 
-export const deleteItem = createAsyncThunk<void, string>(
+export const deleteItem = createAsyncThunk<void, string, {state: RootState}>(
     'items/delete',
-    async (id) => {
-        await axiosApi.delete(`/items/${id}`);
+    async (id, ThunkApi) => {
+        const usersState = ThunkApi.getState().users
+        await axiosApi.delete(`/items/${id}`,
+            {headers:
+                    {"Authorization": usersState.user?.token}});
     }
 )

@@ -23,7 +23,7 @@ const OneItem: React.FC<Props> = ({title, image, price, id}) => {
                     <Typography gutterBottom variant="h6" component="div">
                         {title}
                     </Typography>
-                    <Typography variant="body2">
+                    <Typography variant="h6" color="palevioletred">
                         {price}$
                     </Typography>
                 </CardContent>

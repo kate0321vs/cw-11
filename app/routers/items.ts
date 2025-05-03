@@ -22,7 +22,8 @@ itemsRouter.get("/", async (req, res) => {
 
 itemsRouter.get("/:id", async (req, res) => {
     try {
-        const item = await Item.findById(req.params.id).populate("user", "displayName phoneNumber -_id");
+        const item = await Item.findById(req.params.id).
+        populate("user", "displayName phoneNumber username -_id").populate("category", "name");
         if (!item) {
             res.status(404).send({error: "Item not found"});
             return

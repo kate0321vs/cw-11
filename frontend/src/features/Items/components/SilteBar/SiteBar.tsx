@@ -1,13 +1,15 @@
 import {Box, Divider, List, ListItemButton, Typography} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
-import {selectCategories} from "../../../Categories/CategoriesSlice.ts";
+import {selectCategories, selectCategoriesLoading} from "../../../Categories/CategoriesSlice.ts";
 import {useEffect} from "react";
 import {categoriesFetch} from "../../../Categories/CategoriesThunk.ts";
 import {NavLink} from "react-router-dom";
+import Spinner from "../../../../components/UI/Spinner/Spinner.tsx";
 
 const SiteBar= () => {
     const dispatch = useAppDispatch();
     const categories = useAppSelector(selectCategories);
+    const loading = useAppSelector(selectCategoriesLoading);
 
     useEffect(() => {
         dispatch(categoriesFetch())
@@ -29,7 +31,8 @@ const SiteBar= () => {
                 <ListItemButton component={NavLink} to="/">
                     All items
                 </ListItemButton>
-                {categories.map((category) => (
+                {loading ? <Spinner/> :
+                    categories.map((category) => (
                     <ListItemButton component={NavLink} to={`?category=${category._id}`}
                         sx={{borderRadius: 1, mb: 1}}
                         key={category._id}>

@@ -33,3 +33,4 @@ export const CategoriesSlice = createSlice({
 
 export const categoriesReducer = CategoriesSlice.reducer;
 export const selectCategories = (state: RootState) => state.categories.categories;
+export const selectCategoriesLoading = (state: RootState) => state.categories.loading;

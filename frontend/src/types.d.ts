@@ -49,10 +49,11 @@ export interface IItem {
     description: string;
     image: string;
     price: number;
-    category: string;
+    category: { name: string };
     user: {
         displayName: string;
-        phoneNumber: string
+        phoneNumber: string;
+        username: string;
     };
 }
 
